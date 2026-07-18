@@ -1,0 +1,66 @@
+@page
+@model AllTheBeans.UI.Pages.OrderModel
+@{
+    ViewData["Title"]  =  "Order";
+}
+
+<link rel = "stylesheet" href = "/css/site.css" />
+
+<section class = "page-head">
+    <h1 class = "h1">Order coffee</h1>
+    <p>A basic order form to demonstrate purchase flow (validation and confirmation</p>
+</section>
+
+<section class = "card p-16">
+    @if (Model.ConfirmationMessage is not null)
+    {
+        <div class = "alert" role = "status" aria-live = "polite">
+            @Model.ConfirmationMessage
+        </div>
+        <div class = "mt-16">
+            <a class = "btn" href = "/">Continue browsing</a>
+        </div>
+    }
+    else
+    {
+        <form method = "post" class = "order-form" aria-label = "Order form">
+            <div class = "grid-2">
+                <div class = "field">
+                    <label asp-for = "CustomerName">Your name</label>
+                    <input asp-for = "CustomerName" placeholder = "e.g. Panos" />
+                    <span class = "validation" asp-validation-for = "CustomerName"></span>
+                </div>
+
+                <div class = "field">
+                    <label asp-for = "Quantity">Quantity</label>
+                    <input asp-for = "Quantity" type = "number" min = "1" max = "50" />
+                    <span class = "validation" asp-validation-for = "Quantity"></span>
+                </div>
+            </div>
+
+            <div class = "field mt-12">
+                <label asp-for = "SelectedBeanId">Bean</label>
+                <select asp-for = "SelectedBeanId" asp-items = "Model.BeanOptions" class = "select"></select>
+                <span class = "validation" asp-validation-for = "SelectedBeanId"></span>
+            </div>
+
+            <div class = "mt-16">
+                <button class = "btn" type = "submit">Place order</button>
+                <a class = "btn btn-ghost" href = "/">Cancel</a>
+            </div>
+        </form>
+
+        <hr class = "divider mt-16" />
+
+        <section class = "mt-16">
+            <h2 class = "h2">Need inspiration?</h2>
+            <p>Try the Bean of the Day and click “Order” to pre-select it.</p>
+            <a class = "btn btn-ghost" href = "/BeanOfTheDay">Go to Bean of the Day</a>
+        </section>
+    }
+</section>
+
+@section Scripts {
+    <partial name = "_ValidationScriptsPartial" />
+}
+

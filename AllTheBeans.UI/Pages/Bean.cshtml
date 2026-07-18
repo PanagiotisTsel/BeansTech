@@ -1,0 +1,59 @@
+@page
+@model AllTheBeans.UI.Pages.BeanModel
+@{
+    ViewData["Title"]  =  Model.Bean?.Name ?? "Bean";
+}
+
+<link rel = "stylesheet" href = "/css/site.css" />
+
+@if (Model.Bean is null)
+{
+    <section class = "card p-16">
+        <h1 class = "h1">Bean unable to reach</h1>
+        <p>The requested bean is not in the file</p>
+        <a class = "btn" href = "/">Back to the beans page</a>
+    </section>
+}
+else
+{
+    <section class = "bean-detail card p-16">
+        <div class = "detail-grid">
+            <div class = "detail-media">
+                @if (!string.IsNullOrWhiteSpace(Model.Bean.Image))
+                {
+                    <img class = "detail-image" style  =  "max-width: 500px; max-height: 500px" src = "@Model.Bean.Image" alt = "Photo of @Model.Bean.Name" loading = "lazy" />
+
+                }
+                else
+                {
+                    <div class = "image-placeholder detail-placeholder"style  =  "max-width: 500px; max-height: 500px" aria-hidden = "true"></div>
+                }
+
+                @if (Model.Bean.IsBotD)
+                {
+                    <div class = "botd-banner">Bean of the day</div>
+                }
+            </div>
+
+            <div class = "detail-content">
+                <h1 class = "h1">@Model.Bean.Name</h1>
+                <div class = "meta mt-8">
+                    <span>@Model.Bean.Colour</span>
+                    <span>@Model.Bean.Country</span>
+                    @if (!string.IsNullOrWhiteSpace(Model.Bean.Cost))
+                    {
+                        <span>@Model.Bean.Cost</span>
+                    }
+                </div>
+
+                <p class = "mt-12">@Model.Bean.Description</p>
+
+                <div class = "detail-actions mt-16">
+                    <a class = "btn" href = "/Order?beanId = @Model.Bean._id">Order this bean</a>
+                    <a class = "btn btn-ghost" href = "/">Back to bean list</a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

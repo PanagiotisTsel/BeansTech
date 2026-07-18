@@ -1,0 +1,96 @@
+@page
+@model AllTheBeans.UI.Pages.IndexModel
+@{
+    ViewData["Title"]  =  "Coffee Beans";
+}
+
+<link rel = "stylesheet" href = "/css/site.css" />
+
+<div>
+    <h1 class = "h1">Coffee beans</h1>
+
+     <div class = "container navigation">
+            <nav class = "nav-links" aria-label = "Primary">
+                <a href = "/">Beans</a>
+                <a href = "/BeanOfTheDay">Bean of the Day</a>
+                <a href = "/Order">Order</a>
+            </nav>
+        </div>
+</div>
+<div>
+    <p>Search and open details for any bean. Everything is loaded from the provided JSON file.</p>
+</div>
+<section class = "card p-16">
+    <form method = "get" class = "filters" role = "search" aria-label = "Search beans">
+        <div class = "field">
+            <label asp-for = "Query">Search</label>
+            <input asp-for = "Query" name = "query" placeholder = "Query search" />
+        </div>
+
+        <div class = "field">
+            <label asp-for = "Colour">Colour</label>
+            <select asp-for = "Colour" name = "colour">
+                <option value = "">Any</option>
+                @foreach (var c in Model.AvailableColours)
+                {
+                    bool isPicked = (c == Model.Colour);
+
+                    if (isPicked)
+                    {
+                        <option value="@c" selected>@c</option>
+                    }
+                    else
+                    {
+                        <option value="@c">@c</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class = "actions">
+            <button class = "btn" type = "submit">Filter</button>
+            <a class = "btn btn-ghost" href = "/">Reset</a>
+        </div>
+    </form>
+</section>
+
+<section class = "grid mt-16" aria-label = "Bean list">
+    @foreach (var bean in Model.Beans)
+    {
+        <article class = "bean-tile" aria-label = "Bean">
+            <a href = "/Bean?beanId=@bean._id" class = "bean-link">
+                <div class = "bean-image" style  =  "max-height: 500px; max-width: 500px;">
+                    @if (!string.IsNullOrWhiteSpace(bean.Image))
+                    {
+                    <img src = "@bean.Image" alt = "Photo of @bean.Name" loading = "lazy" style = "max-width: 500px; max-height: 500px;object-fit:cover;" />
+
+                    }
+                    else
+                    {
+                        <div class = "image-placeholder" aria-hidden = "true"></div>
+                    }
+                </div>
+
+                <div class = "bean-body">
+                    <h2 class = "h2">@bean.Name</h2>
+                    <div class = "meta">
+                        <span>@bean.Colour</span>
+                        <span>@bean.Country</span>
+                        @if (!string.IsNullOrWhiteSpace(bean.Cost))
+                        {
+                            <span>@bean.Cost</span>
+                        }
+                    </div>
+
+                    <p>@bean.Description</p>
+
+                    @if (bean.IsBotD)
+                    {
+                        <span>Bean of the day</span>
+                    }
+                </div>
+            </a>
+        </article>
+    }
+</section>
+

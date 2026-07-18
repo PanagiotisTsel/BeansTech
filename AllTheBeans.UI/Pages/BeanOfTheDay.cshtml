@@ -1,0 +1,56 @@
+@page
+@model AllTheBeans.UI.Pages.BeanOfTheDayModel
+@{
+    ViewData["Title"]  =  "Bean of the Day";
+}
+
+<link rel = "stylesheet" href = "/css/site.css" />
+
+<section class = "page-head">
+    <h1 class = "h1">Bean of the Day</h1>
+</section>
+
+@if (Model.Bean is null)
+{
+    <section class = "card p-16">
+        <h2 class = "h2">No Bean of the Day found</h2>
+    </section>
+}
+else
+{
+    <section class = "card p-16 botd-feature">
+        <div class = "botd-inner">
+            <div class = "botd-media">
+                @if (!string.IsNullOrWhiteSpace(Model.Bean.Image))
+                {
+                    <img class = "botd-image" style  =  "max-width: 500px; max-height: 500px" src = "@Model.Bean.Image" alt = "Photo of @Model.Bean.Name" />
+                }
+                else
+                {
+                    <div class = "image-placeholder" aria-hidden = "true"></div>
+                }
+            </div>
+
+            <div class = "botd-content">
+                <div class = "botd-badge">Todays pick</div>
+                <h2 class = "h2">@Model.Bean.Name</h2>
+                <p>@Model.Bean.Description</p>
+
+                <div class = "meta mt-8">
+                    <span>@Model.Bean.Colour</span>
+                    <span>@Model.Bean.Country</span>
+                    @if (!string.IsNullOrWhiteSpace(Model.Bean.Cost))
+                    {
+                        <span>@Model.Bean.Cost</span>
+                    }
+                </div>
+
+                <div class = "mt-16">
+                    <a class = "btn" href = "/Bean?beanId = @Model.Bean._id">Learn more</a>
+                    <a class = "btn btn-ghost" href = "/Order?beanId = @Model.Bean._id">Order</a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
