@@ -1,0 +1,13 @@
+#build output
+bin/
+obj/
+out/
+
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+*.nupkg
+packages/
