@@ -7,19 +7,15 @@
 <link rel = "stylesheet" href = "/css/site.css" />
 
 <div>
-    <h1 class = "h1">Coffee beans</h1>
+    <h1 class = "h1" style = "display: flex; justify-content: center;">Coffee beans</h1>
 
-     <div class = "container navigation">
-            <nav class = "nav-links" aria-label = "Primary">
-                <a href = "/">Beans</a>
-                <a href = "/BeanOfTheDay">Bean of the Day</a>
-                <a href = "/Order">Order</a>
-            </nav>
-        </div>
+    <nav aria-label = "Primary" style = "display: block; width: 100%; margin: 16px 0; padding: 8px 0; clear: both;">
+        <a href = "/" style  =  "display: inline-block; margin-right: 16px;">Beans</a>
+        <a href = "/BeanOfTheDay" style = "display: inline-block; margin-right: 16px;">Bean of the Day</a>
+        <a href = "/Order" style = "display: inline-block;">Order</a>
+    </nav>
 </div>
-<div>
-    <p>Search and open details for any bean. Everything is loaded from the provided JSON file.</p>
-</div>
+
 <section class = "card p-16">
     <form method = "get" class = "filters" role = "search" aria-label = "Search beans">
         <div class = "field">
